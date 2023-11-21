@@ -1,0 +1,21 @@
+{
+    "name": "Street Alert",
+    "short_name": "Street Alert",
+    "start_url": ".",
+    "background_color": "#ffab60",
+    "theme_color":"#ea7b4b",
+    "display":"standalone",
+    "icons":[
+        {
+            "src": "images/logo192.png",
+            "sizes":"192x192",
+            "type":"image/png"
+        },
+        {
+            "src": "images/logo512.png",
+            "sizes":"512x512",
+            "type":"image/png"
+        }
+     ]
+    
+}
