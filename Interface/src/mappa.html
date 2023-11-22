@@ -19,6 +19,10 @@
         {
             height: 1000px;
         }
+
+        .marker{
+            color: green;
+        }
     
     </style>
 
@@ -32,12 +36,66 @@
 <script>
 
     var map = L.map('map')
-    map.setView([45.612114, 12.139598], 20);
+    map.setView([45.612114, 12.139598], 13);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
+
+    navigator.geolocation.watchPosition(success, error);
+
+    var redIcon = L.icon({
+        iconUrl: '../images/location-red.png',
+
+        iconSize:     [32, 32], // size of the icon
+        iconAnchor:   [16, 32], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    var greenIcon = L.icon({
+        iconUrl: '../images/location-green.png',
+
+        iconSize:     [32, 32], // size of the icon
+        iconAnchor:   [16, 32], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    var blueIcon = L.icon({
+        iconUrl: '../images/location-blue.png',
+
+        iconSize:     [32, 32], // size of the icon
+        iconAnchor:   [16, 32], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    let marker, circle;
+
+    function success(pos){
+
+        const lat = 45.649150;
+        const lng = 12.234116;
+        const accuracy = pos.coords.accuracy;
+
+        marker = L.marker([lat, lng], {icon: redIcon}).addTo(map);
+        circle = L.circle([lat, lng], { radius: 100 } ).addTo(map);
+
+        // marker = L.marker([45.612114, 12.139598]).addTo(map);
+        // circle = L.circle([45.612114, 12.139598], { radius: accuracy } ).addTo(map);
+
+        map.setView([lat, lng]);
+
+    }
+
+    function error(err){
+
+        if(err.code === 1){
+            alert("Please allow geolocation access");
+        }else{
+            alert("Cannto get current location");
+        }
+
+    }
 
 </script>
 
