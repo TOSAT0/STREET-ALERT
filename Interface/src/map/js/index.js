@@ -7,6 +7,8 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 }).addTo(map);
 
 import {redIcon, greenIcon, blueIcon} from './markers.js';
+import {layerControl} from './layers.js';
+
 let marker, circle;
 
 navigator.geolocation.watchPosition(success, error);
@@ -17,8 +19,8 @@ function success(pos){
     const lng = 12.243057;
     const accuracy = pos.coords.accuracy;
 
-    marker = L.marker([lat, lng], {icon: redIcon}).addTo(map);
-    circle = L.circle([lat, lng], { radius: 500 , color:'red' } ).addTo(map);
+    //marker = L.marker([lat, lng], {icon: redIcon}).addTo(map);
+    //circle = L.circle([lat, lng], { radius: 500 , color:'red' } ).addTo(map);
 
     // marker = L.marker([45.612114, 12.139598]).addTo(map);
     // circle = L.circle([45.612114, 12.139598], { radius: accuracy } ).addTo(map);
@@ -35,3 +37,5 @@ function error(err){
     }
 
 }
+
+layerControl.addTo(map);
