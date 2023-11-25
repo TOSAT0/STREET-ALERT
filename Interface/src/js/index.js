@@ -1,3 +1,6 @@
+import {redIcon, greenIcon, blueIcon} from './markers.js';
+import {layerControl} from './layers.js';
+
 var map = L.map('map');
 map.setView([45.665853, 12.243057], 13);
 
@@ -6,17 +9,14 @@ maxZoom: 19,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-import {redIcon, greenIcon, blueIcon} from './markers.js';
-import {layerControl} from './layers.js';
-
 let marker, circle;
 
 navigator.geolocation.watchPosition(success, error);
 
 function success(pos){
 
-    const lat = 45.665853;
-    const lng = 12.243057;
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
     const accuracy = pos.coords.accuracy;
 
     //marker = L.marker([lat, lng], {icon: redIcon}).addTo(map);
@@ -25,7 +25,7 @@ function success(pos){
     // marker = L.marker([45.612114, 12.139598]).addTo(map);
     // circle = L.circle([45.612114, 12.139598], { radius: accuracy } ).addTo(map);
 
-    map.setView([lat, lng]);
+    //map.setView([lat, lng]);
 
 }
 function error(err){

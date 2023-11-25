@@ -20,10 +20,6 @@
             height: 600px;
             width: 600px;
         }
-
-        .marker{
-            color: green;
-        }
     
     </style>
 
@@ -34,6 +30,7 @@
     
 </body>
 
-<script type="module" src="js/index.js"></script>
+<script type="module" src="js/index.js" >
+</script>
 
 </html>
