@@ -9,9 +9,26 @@ maxZoom: 19,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-let marker, circle;
+let marker, index = 0
 
-navigator.geolocation.watchPosition(success, error);
+while(index < jsData.length){
+
+    let lat = jsData[index].lat,
+    lng = jsData[index].lon,
+    state = jsData[index].state
+
+    if(state == 'Nuovo')
+        marker = L.marker([lat, lng], {icon: redIcon}).addTo(map)
+    else if(state == 'Visto')
+        marker = L.marker([lat, lng], {icon: blueIcon}).addTo(map)
+    else
+        marker = L.marker([lat, lng], {icon: greenIcon}).addTo(map)
+    
+    index++;
+    
+}
+
+navigator.geolocation.watchPosition(success, error)
 
 function success(pos){
 
