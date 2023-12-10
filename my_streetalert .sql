@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 10, 2023 alle 18:15
+-- Creato il: Dic 10, 2023 alle 18:34
 -- Versione del server: 8.0.30
 -- Versione PHP: 8.0.22
 
@@ -46,8 +46,8 @@ CREATE TABLE `alerts` (
 
 CREATE TABLE `type` (
   `id_type` int NOT NULL,
-  `type` enum('buca','segnaletica','carcassa animale') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `type` enum('buca','segnaletica','carcassa animale') COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
