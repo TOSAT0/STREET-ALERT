@@ -1,5 +1,6 @@
 <?php
 
+    // CONNECTION TO THE DATABASE
     function connect(){
         try{
             return new mysqli("localhost", "root", "", "my_streetalert");
@@ -8,6 +9,7 @@
         }
     }
 
+    // LOGIN
     function login($user, $psw){
         $conn = connect();
 
@@ -16,6 +18,7 @@
         }
     }
 
+    // ADD A NEW USER TO THE USERS TABLE
     function sign_up($user, $psw){
         $conn = connect();
 
@@ -28,6 +31,7 @@
         }
     }
 
+    // CHECK IF THE USER ALREADY EXISTS
     function user_exist($user){
         $conn = connect();
 
@@ -41,6 +45,7 @@
         return false;
     }
 
+    // ADD A NEW ALERT TO THE ALERTS TABLE
     function report($photo, $lat, $lon, $description, $id_user, $id_type){
         $conn = connect();
 
@@ -51,30 +56,58 @@
         }
     }
 
+    // CHECK IF THE ALERT ALREADY EXISTS
     function alert_exist($lat, $lon){
         $conn = connection();
 
         $alerts = get_alerts("ALL");
         foreach($alerts as $row){
-            if($row['lat']-0.000135 >= $lat && $row['lat']+0.000135 <= $lat && $row['lon']-0.000193 >= $lon && $row['lon']+0.000193 <= $lon)
+            if($row['lat']-0.000135 >= $lat && $row['lat']+0.000135 <= $lat 
+            && $row['lon']-0.000193 >= $lon && $row['lon']+0.000193 <= $lon)
+                return true;
         }
-        /*
-            LAT: 110.95km -> 0.000135
-            LON: 77.610km -> 0.000193
-        */
+        return false;
     }
 
-    function get_alerts($state){
+    // GET A SPECIFIC ALERT CATEGORY
+    function get_alerts($states){
         $conn = connection();
 
-        try{
-            if($state == "ALL")
-                return $conn->query("SELECT * FROM alerts");
-            else
-                return $conn->query("SELECT * FROM alerts WHERE state='$state'");
-        }catch(Execption $e){
-            die("ops");
+        $alerts = "";
+        foreach($states as $state){
+            try{
+                $alerts += $conn->query("SELECT * FROM alerts WHERE state='$state'");
+            }catch(Execption $e){
+                die("ops");
+            }
         }
+        return $alerts;
+    }
+
+    // PRINT THE REPORTING TABLE
+    public print_table($states){
+        $alerts = get_alerts($states);
+
+        echo "<table>";
+        foreach($alerts as $row){
+            echo "<tr class='".$row['state']."'>";
+            echo "<td>".$row['']."</td>";
+            echo "<td>".$row['']."</td>";
+            echo "<td>".$row['']."</td>";
+            echo "<td>".$row['']."</td>";
+            echo "</tr>"
+
+            // photo
+            // via
+            // id_type
+            // description
+        }
+        echo "</table>";
     }
 
 ?>
+
+<!--EXTRA INFO
+    LAT: 110.95km -> 0.000135
+    LON: 77.610km -> 0.000193
+-->
