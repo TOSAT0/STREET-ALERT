@@ -1,5 +1,5 @@
-import {redIcon, greenIcon, blueIcon} from './markers.js';
-import {layerControl} from './layers.js';
+//import {redIcon, greenIcon, blueIcon} from './markers.js';
+//import {layerControl} from './layers.js';
 
 var map = L.map('map');
 map.setView([45.665853, 12.243057], 13);
@@ -9,26 +9,9 @@ maxZoom: 19,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-let marker, index = 0
+let marker, circle;
 
-while(index < jsData.length){
-
-    let lat = jsData[index].lat,
-    lng = jsData[index].lon,
-    state = jsData[index].state
-
-    if(state == 'Nuovo')
-        marker = L.marker([lat, lng], {icon: redIcon}).addTo(map)
-    else if(state == 'Visto')
-        marker = L.marker([lat, lng], {icon: blueIcon}).addTo(map)
-    else
-        marker = L.marker([lat, lng], {icon: greenIcon}).addTo(map)
-    
-    index++;
-    
-}
-
-navigator.geolocation.watchPosition(success, error)
+navigator.geolocation.watchPosition(success, error);
 
 function success(pos){
 
@@ -36,13 +19,10 @@ function success(pos){
     const lng = pos.coords.longitude;
     const accuracy = pos.coords.accuracy;
 
-    //marker = L.marker([lat, lng], {icon: redIcon}).addTo(map);
-    //circle = L.circle([lat, lng], { radius: 500 , color:'red' } ).addTo(map);
+    marker = L.marker([lat, lng]).addTo(map);
+    circle = L.circle([lat, lng], {radius: accuracy}).addTo(map)
 
-    // marker = L.marker([45.612114, 12.139598]).addTo(map);
-    // circle = L.circle([45.612114, 12.139598], { radius: accuracy } ).addTo(map);
-
-    //map.setView([lat, lng]);
+    map.setView([lat, lng]);
 
 }
 function error(err){
@@ -55,4 +35,4 @@ function error(err){
 
 }
 
-layerControl.addTo(map);
+//layerControl.addTo(map);
