@@ -2,8 +2,9 @@
 //import {layerControl} from './layers.js';
 
 var map = L.map('map');
-map.setView([45.665853, 12.243057], 13);
+map.remove();
 
+var map = L.map('map');
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 maxZoom: 19,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -22,7 +23,7 @@ function success(pos){
     marker = L.marker([lat, lng]).addTo(map);
     circle = L.circle([lat, lng], {radius: accuracy}).addTo(map)
 
-    map.setView([lat, lng]);
+    map.setView([lat, lng], 13);
 
 }
 function error(err){
