@@ -1,39 +1,25 @@
-//import {redIcon, greenIcon, blueIcon} from './markers.js';
-//import {layerControl} from './layers.js';
+var map = L.map('map').fitWorld()
 
-var map = L.map('map');
-map.remove();
-
-var map = L.map('map');
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 maxZoom: 19,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+}).addTo(map)
 
-let marker, circle;
+map.locate({setView: true, maxZoom: 16})
 
-navigator.geolocation.watchPosition(success, error);
+function onLocationFound(e) {
+    var radius = e.accuracy;
 
-function success(pos){
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
-    const accuracy = pos.coords.accuracy;
-
-    marker = L.marker([lat, lng]).addTo(map);
-    circle = L.circle([lat, lng], {radius: accuracy}).addTo(map)
-
-    map.setView([lat, lng], 13);
-
-}
-function error(err){
-
-    if(err.code === 1){
-        alert("Please allow geolocation access");
-    }else{
-        alert("Cannto get current location");
-    }
-
+    L.circle(e.latlng, radius).addTo(map);
 }
 
-//layerControl.addTo(map);
+map.on('locationfound', onLocationFound);
+
+function onLocationError(e) {
+    alert(e.message);
+}
+
+map.on('locationerror', onLocationError);
