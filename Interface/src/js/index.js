@@ -1,58 +1,44 @@
 import {redIcon, greenIcon, blueIcon} from './markers.js';
-import {layerControl} from './layers.js';
+// import {layerControl} from './layers.js';
 
-var map = L.map('map');
-map.setView([45.665853, 12.243057], 13);
+var map = L.map('map').fitWorld()
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 maxZoom: 19,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+}).addTo(map)
 
-let marker, index = 0
+map.locate({setView: true, maxZoom: 16})
 
-while(index < jsData.length){
+function onLocationFound(e) {
+    let marker, index = 0
 
-    let lat = jsData[index].lat,
-    lng = jsData[index].lon,
-    state = jsData[index].state
+    while(index < jsData.length){
 
-    if(state == 'Nuovo')
-        marker = L.marker([lat, lng], {icon: redIcon}).addTo(map)
-    else if(state == 'Visto')
-        marker = L.marker([lat, lng], {icon: blueIcon}).addTo(map)
-    else
-        marker = L.marker([lat, lng], {icon: greenIcon}).addTo(map)
-    
-    index++;
-    
-}
+        let lat = jsData[index].lat,
+        lng = jsData[index].lon,
+        state = jsData[index].state
 
-navigator.geolocation.watchPosition(success, error)
-
-function success(pos){
-
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
-    const accuracy = pos.coords.accuracy;
-
-    //marker = L.marker([lat, lng], {icon: redIcon}).addTo(map);
-    //circle = L.circle([lat, lng], { radius: 500 , color:'red' } ).addTo(map);
-
-    // marker = L.marker([45.612114, 12.139598]).addTo(map);
-    // circle = L.circle([45.612114, 12.139598], { radius: accuracy } ).addTo(map);
-
-    //map.setView([lat, lng]);
-
-}
-function error(err){
-
-    if(err.code === 1){
-        alert("Please allow geolocation access");
-    }else{
-        alert("Cannto get current location");
+        if(state == 'Nuovo')
+            marker = L.marker([lat, lng], {icon: redIcon}).addTo(map)
+        else if(state == 'Visto')
+            marker = L.marker([lat, lng], {icon: blueIcon}).addTo(map)
+        else
+            marker = L.marker([lat, lng], {icon: greenIcon}).addTo(map)
+        
+        index++;
+        
     }
-
 }
 
-layerControl.addTo(map);
+map.on('locationfound', onLocationFound);
+
+// map.setView([45.665853, 12.243057], 13)
+
+
+
+function onLocationError(e) {
+    alert(e.message);
+}
+
+map.on('locationerror', onLocationError);
