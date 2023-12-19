@@ -10,7 +10,7 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 map.locate({setView: true, maxZoom: 16})
 
-function onLocationFound() {
+function onLocationFound(e) {
     let marker, index = 0
 
     while(index < jsData.length){
