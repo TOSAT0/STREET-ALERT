@@ -10,7 +10,7 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 map.locate({setView: true, maxZoom: 16})
 
-function onLocationFound(e) {
+function onLocationFound() {
     let marker, index = 0
 
     while(index < jsData.length){
@@ -32,10 +32,6 @@ function onLocationFound(e) {
 }
 
 map.on('locationfound', onLocationFound);
-
-// map.setView([45.665853, 12.243057], 13)
-
-
 
 function onLocationError(e) {
     alert(e.message);
