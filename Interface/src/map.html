@@ -1,5 +1,3 @@
-<?php require('query.php'); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,45 +16,14 @@
     crossorigin=""></script>
 
 </head>
-
-<style>
-    
-</style>
 <body>
 
     <div id="map"></div>
     
 </body>
 
-<script>
-    var jsData = <?php echo getCoords(); ?>
-</script>
-
-<script type="module" src="js/index.js" >
+<script type="module" src="js/index.js" defer>
     
 </script>
 
 </html>
-
-<?php
-
-    function getCoords(){
-        $lat; $lon; $state;
-        $data = array();
-
-        $getCoords=alerts();
-
-        foreach($getCoords as $alert){
-            $lat = $alert['lat'];
-            $lon = $alert['lon'];
-            $state = $alert['state'];
-
-            $data[] = array('lat' => $lat, 'lon' => $lon, 'state' => $state);
-        }
-
-        $jsonCoords = json_encode($data);
-
-        return $jsonCoords;
-    }
-    
-?>

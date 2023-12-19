@@ -10,12 +10,30 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 map.locate({setView: true, maxZoom: 16})
 
-function onLocationFound(e) {
-    let marker, index = 0
+let xhttp = new XMLHttpRequest();
+
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        setData(JSON.parse(this.response))
+        // onLocationFound()
+    }
+}
+
+xhttp.open("POST", "server.php", true)
+xhttp.send()
+
+let jsData;
+
+function setData(a){
+    jsData = a
+}
+
+function onLocationFound() {
+    let marker, index = 0, lat, lng, state
 
     while(index < jsData.length){
 
-        let lat = jsData[index].lat,
+        lat = jsData[index].lat,
         lng = jsData[index].lon,
         state = jsData[index].state
 
