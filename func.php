@@ -50,9 +50,9 @@
         $conn = connect();
 
         try{
-            $conn->query("INSERT INTO alerts VALUES(NULL, $photo, $lat, $lon, '$description', 'NEW', 'NOW(), $id_user, $id_type)");
+            $conn->query("INSERT INTO alerts VALUES(NULL, '$photo', NOW(), $lat, $lon, '$description', 'NEW', $id_user, $id_type)");
         }catch(Exception $e){
-            die("ops");
+            die("1ops");
         }
     }
 
