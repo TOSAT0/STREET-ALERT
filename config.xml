@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Define complex types for elements -->
+
   <xs:element name="library">
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="book" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
+      <xs:attribute name="location" type="xs:string"/>
     </xs:complexType>
   </xs:element>
 
@@ -13,10 +17,11 @@
       <xs:sequence>
         <xs:element name="title" type="xs:string"/>
         <xs:element ref="author"/>
-        <xs:element name="genre" type="xs:string"/>
-        <xs:element name="publication_year" type="xs:integer"/>
-        <xs:element name="isbn" type="xs:string"/>
+        <xs:element name="genre" type="GenreType"/>
+        <xs:element name="publication_year" type="xs:gYear"/>
+        <xs:element name="isbn" type="ISBNType"/>
       </xs:sequence>
+      <xs:attribute name="id" type="xs:positiveInteger"/>
     </xs:complexType>
   </xs:element>
 
@@ -24,10 +29,37 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element name="name" type="xs:string"/>
-        <xs:element name="birth_year" type="xs:integer"/>
-        <xs:element name="death_year" type="xs:integer" minOccurs="0"/>
+        <xs:element name="birth_year" type="xs:gYear"/>
+        <xs:element name="death_year" type="xs:gYear" minOccurs="0"/>
       </xs:sequence>
+      <xs:attribute name="nationality" type="NationalityType"/>
     </xs:complexType>
   </xs:element>
+
+  <!-- Define simple types -->
+
+  <xs:simpleType name="GenreType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Fantasy"/>
+      <xs:enumeration value="Fiction"/>
+      <xs:enumeration value="Dystopian"/>
+      <xs:enumeration value="Science Fiction"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ISBNType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1,7}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="NationalityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="British"/>
+      <xs:enumeration value="American"/>
+      <xs:enumeration value="Canadian"/>
+      <!-- Add more nationalities as needed -->
+    </xs:restriction>
+  </xs:simpleType>
 
 </xs:schema>
