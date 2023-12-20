@@ -9,12 +9,12 @@
     while(!feof($fp)){
         $array = fgetcsv($fp);
         if($array != null){
-            $sigla = $array[0];
-            $nome = $array[1];
+            $sign = $array[0];
+            $name = $array[1];
             $lat = $array[2];
             $lon = $array[3];
 
-            $query .= "($i,\"$sigla\",\"$nome\",$lat,$lon)";
+            $query .= "($i,\"$sign\",\"$name\",$lat,$lon)";
             if($i != 7900)
                 $query .= ",";
             $i++;
