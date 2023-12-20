@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 10, 2023 alle 18:34
+-- Creato il: Dic 20, 2023 alle 14:28
 -- Versione del server: 8.0.30
 -- Versione PHP: 8.0.22
 
@@ -30,10 +30,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `alerts` (
   `id_alert` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'PK for alerts',
   `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'directory for photos',
+  `date` datetime NOT NULL,
   `lat` float(8,6) NOT NULL COMMENT 'latitude for alerts',
   `lon` float(8,6) NOT NULL COMMENT 'longitude for alerts',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'description for alerts',
-  `state` enum('Nuovo','Visto','Risolto') COLLATE utf8mb4_general_ci NOT NULL COMMENT 'state for alerts',
+  `state` enum('NEW','SEEN','SOLVED') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'state for alerts',
   `id_user` int NOT NULL,
   `id_type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -41,32 +42,39 @@ CREATE TABLE `alerts` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `type`
+-- Struttura della tabella `types`
 --
 
-CREATE TABLE `type` (
+CREATE TABLE `types` (
   `id_type` int NOT NULL,
-  `type` enum('buca','segnaletica','carcassa animale') COLLATE utf8mb4_general_ci NOT NULL
+  `type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `types`
+--
+
+INSERT INTO `types` (`id_type`, `type`) VALUES
+(0, 'test');
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `user`
+-- Struttura della tabella `users`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id_user` int NOT NULL COMMENT 'PK for user',
-  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Unique email for user',
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Password for user'
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Unique email for user',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Password for user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Table for user';
 
 --
--- Dump dei dati per la tabella `user`
+-- Dump dei dati per la tabella `users`
 --
 
-INSERT INTO `user` (`id_user`, `email`, `password`) VALUES
-(1, 'test@streetalert.com', 'Passw0rd');
+INSERT INTO `users` (`id_user`, `email`, `password`) VALUES
+(0, 'streetalert.it@gmail.com', 'Passw0rd');
 
 --
 -- Indici per le tabelle scaricate
@@ -81,15 +89,15 @@ ALTER TABLE `alerts`
   ADD KEY `id_type` (`id_type`);
 
 --
--- Indici per le tabelle `type`
+-- Indici per le tabelle `types`
 --
-ALTER TABLE `type`
+ALTER TABLE `types`
   ADD PRIMARY KEY (`id_type`);
 
 --
--- Indici per le tabelle `user`
+-- Indici per le tabelle `users`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `email` (`email`);
 
@@ -104,9 +112,9 @@ ALTER TABLE `alerts`
   MODIFY `id_alert` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'PK for alerts';
 
 --
--- AUTO_INCREMENT per la tabella `user`
+-- AUTO_INCREMENT per la tabella `users`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   MODIFY `id_user` int NOT NULL AUTO_INCREMENT COMMENT 'PK for user', AUTO_INCREMENT=4;
 
 --
@@ -117,8 +125,8 @@ ALTER TABLE `user`
 -- Limiti per la tabella `alerts`
 --
 ALTER TABLE `alerts`
-  ADD CONSTRAINT `alerts_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `alerts_ibfk_2` FOREIGN KEY (`id_type`) REFERENCES `type` (`id_type`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `alerts_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
+  ADD CONSTRAINT `alerts_ibfk_2` FOREIGN KEY (`id_type`) REFERENCES `types` (`id_type`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
