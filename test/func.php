@@ -62,26 +62,23 @@
 
         $alerts = get_alerts(array("NEW","SEEN","SOLVED"));
         foreach($alerts as $row){
-            if($row['lat']-0.000135 >= $lat && $row['lat']+0.000135 <= $lat 
-            && $row['lon']-0.000193 >= $lon && $row['lon']+0.000193 <= $lon)
+            if($lat >= $row['lat']-0.000135 && $lat <= $row['lat']+0.000135 
+            && $lon >= $row['lon']-0.000193 && $lon <= $row['lon']+0.000193)
                 return true;
         }
         return false;
     }
 
     // GET A SPECIFIC ALERT CATEGORY
-    function get_alerts($states){
+    function get_alerts($states) {
         $conn = connect();
-
-        $alerts = "";
-        foreach($states as $state){
-            try{
-                $alerts += $conn->query("SELECT * FROM alerts WHERE state='$state'");
-            }catch(Execption $e){
-                die("ops");
-            }
+        $stateList = implode("','", $states);
+        
+        try {    
+            return $conn->query("SELECT * FROM alerts WHERE state IN ('$stateList')");
+        } catch (Exception $e) {
+            die("ops");
         }
-        return $alerts;
     }
 
     // PRINT THE REPORTING TABLE
