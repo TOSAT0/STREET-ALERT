@@ -37,6 +37,7 @@
         }
 
         xhttp.open("GET", "server.php?lat=" + lat + "&lon=" + lon, true)
+        xhttp.setRequestHeader("Cache-Control", "no-cache")
         xhttp.send()
 
       }
