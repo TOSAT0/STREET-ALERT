@@ -6,4 +6,7 @@
     }else{
         report("nuovo", $_GET['lat'], $_GET['lon'], "", 0, 0);
     }
+    
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+
 ?>
