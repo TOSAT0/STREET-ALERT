@@ -50,9 +50,20 @@
         $conn = connect();
 
         try{
-            $conn->query("INSERT INTO alerts VALUES(NULL, '$photo', NOW(), $lat, $lon, '$description', 'NEW', $id_user, $id_type)");
+            $conn->query("INSERT INTO alerts VALUES(NULL, '$photo', NOW(), $lat, $lon, '$description', 'NEW', DEFAULT, $id_user, $id_type)");
         }catch(Exception $e){
             die("1ops");
+        }
+    }
+
+    // INCREASE THE NUMBER OF REPORT
+    function modify($id_alert){
+        $conn = connect();
+        
+        try{
+            $conn->query("UPDATE alerts SET times = times+1 WHERE id_alert = $id_alert");
+        } catch(Exception $e){
+            die("ops");
         }
     }
 
@@ -64,9 +75,9 @@
         foreach($alerts as $row){
             if($lat >= $row['lat']-0.000135 && $lat <= $row['lat']+0.000135 
             && $lon >= $row['lon']-0.000193 && $lon <= $row['lon']+0.000193)
-                return true;
+                return $row['id_alert'];
         }
-        return false;
+        return -1;
     }
 
     // GET A SPECIFIC ALERT CATEGORY
