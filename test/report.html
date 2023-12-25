@@ -2,9 +2,16 @@
 <html>
   <body>
     <h1>HTML Geolocation</h1>
-    <p>Click the button to get your coordinates.</p>
 
-    <button onclick="getLocation()">QUESTA E' UNA MAPPA</button>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+      <label for="imageFile">SCATTA UNA FOTO DELA TUA SEGNALAZIONE:</label>
+      <input type="file" id="imageFile" name="image" capture="environment" accept="image/*" />
+      <br>
+      <label for="imageFile">Invia foto segnalazione</label>
+      <input type="submit" value="Upload">
+    </form><br>
+
+    <button onclick="getLocation()">invia le coordinate</button>
 
     <p id="demo"></p>
 

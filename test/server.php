@@ -5,6 +5,7 @@
 
     if($id_alert == -1){
         report("nuovo", $_GET['lat'], $_GET['lon'], "", 0, 0);
+        
     }else{
         modify($id_alert);
     }
