@@ -78,6 +78,8 @@
                 array_push($same, $row['id_alert']);
         }
         return $same;
+        // LAT: 110.95km -> 0.000135
+        // LON: 77.610km -> 0.000193
     }
 
     // GET A SPECIFIC ALERT CATEGORY
