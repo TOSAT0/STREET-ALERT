@@ -68,16 +68,16 @@
     }
 
     // CHECK IF THE ALERT ALREADY EXISTS
-    function alert_exist($lat, $lon){
+    function alert_exist($lat, $lon, $error){
         $conn = connect();
-
+        $same = array();
         $alerts = get_alerts(array("NEW","SEEN","SOLVED"));
         foreach($alerts as $row){
-            if($lat >= $row['lat']-0.000135 && $lat <= $row['lat']+0.000135 
-            && $lon >= $row['lon']-0.000193 && $lon <= $row['lon']+0.000193)
-                return $row['id_alert'];
+            $dis = sqrt(pow(($lat-$row['lat']),2) + pow(($lon-$row['lon']),2));
+            if($dis < $error - $row['error'])
+                array_push($same, $row['id_alert']);
         }
-        return -1;
+        return $same;
     }
 
     // GET A SPECIFIC ALERT CATEGORY
