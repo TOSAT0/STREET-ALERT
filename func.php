@@ -46,11 +46,11 @@
     }
 
     // ADD A NEW ALERT TO THE ALERTS TABLE
-    function report($photo, $lat, $lon, $description, $id_user, $id_type){
+    function report($photo, $lat, $lon, $error, $description, $id_user, $id_type){
         $conn = connect();
 
         try{
-            $conn->query("INSERT INTO alerts VALUES(NULL, '$photo', NOW(), $lat, $lon, '$description', 'NEW', DEFAULT, $id_user, $id_type)");
+            $conn->query("INSERT INTO alerts VALUES(NULL, '$photo', NOW(), $lat, $lon, $error, '$description', 'NEW', DEFAULT, $id_user, $id_type)");
         }catch(Exception $e){
             die("1ops");
         }

@@ -1,23 +1,22 @@
 <?php
     include "func.php";
 
+    $same = alert_exist($_GET['lat'], $_GET['lon'], $_GET['error']);
+
     if($_GET['status'] == "report"){
-        $id_alert = alert_exist($_GET['lat'], $_GET['lon']);
-        
-        if($id_alert == -1){
-            report("photo", $_GET['lat'], $_GET['lon'], "", 0, 0);
+        if(sizeof($same) == 0){
+            report("photo", $_GET['lat'], $_GET['lon'], $_GET['error'], "", 0, 0);
             $response = array("status" => "ok");
         }else{
-            $response = array("status" => "not_ok");
+            $response = array("status" => "not_ok", "same" => $same);
         }
     }
     if($_GET['status'] == "exist"){
-        $id_alert = alert_exist($_GET['lat'], $_GET['lon']);
-        modify($id_alert);
+        modify($_GET['id_alert']);
         $response = array("status" => "ok");
     }
     if($_GET['status'] == "not_exist"){
-        report("photo", $_GET['lat'], $_GET['lon'], "", 0, 0);
+        report("photo", $_GET['lat'], $_GET['lon'], $_GET['error'], "", 0, 0);
         $response = array("status" => "ok");
     }
     
