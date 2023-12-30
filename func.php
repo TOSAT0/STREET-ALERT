@@ -57,11 +57,11 @@
     }
 
     // INCREASE THE NUMBER OF REPORT
-    function modify($id_alert){
+    function modify($id_alert, $lat, $lon){
         $conn = connect();
         
         try{
-            $conn->query("UPDATE alerts SET times = times+1 WHERE id_alert = $id_alert");
+            $conn->query("UPDATE alerts SET lat = $lat, lon = $lon, times = times+1 WHERE id_alert = $id_alert");
         } catch(Exception $e){
             die("ops");
         }
@@ -75,7 +75,7 @@
         foreach($alerts as $row){
             $dis = rad2deg(acos(sin(deg2rad($lat)) * sin(deg2rad($row['lat'])) + cos(deg2rad($lat)) * cos(deg2rad($row['lat'])) * cos(deg2rad($lon - $row['lon'])))) * 69090 * 1.609344;
             if($dis <= $error + $row['error'])
-                array_push($same, $row['id_alert']);
+                array_push($same, $row);
         }
         return $same;
     }

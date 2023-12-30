@@ -34,9 +34,9 @@
             n = document.getElementById("ask")
 
             if(res.status == "ok"){
-              n.innerHTML = "<h>L'elemento è stato aggiunto al database</h1>"
+              n.innerHTML = "<h>Elemento aggiunto al database</h1>"
             }if(res.status == "not_ok"){
-              n.innerHTML = "<h1>L'elemento potrebbe già esistere</h1><button onclick='alert("+lat+","+lon+",\"not_exist\")'>NUOVO</button><button onclick='alert("+lat+","+lon+",\"exist\")'>NON NUOVO</button>";
+              
             }
           }
         }
