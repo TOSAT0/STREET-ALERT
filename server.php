@@ -23,10 +23,4 @@
     header('Content-Type: application/json');
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     echo json_encode($response);
-
-    /* REQUEST STATUS:
-        report      -> check if the alert already exist
-        exist       -> modify the alert in the table
-        not_exist   -> add the alert in the table
-    */
 ?>
