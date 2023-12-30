@@ -73,13 +73,11 @@
         $same = array();
         $alerts = get_alerts(array("NEW","SEEN","SOLVED"));
         foreach($alerts as $row){
-            $dis = sqrt(pow(($lat-$row['lat']),2) + pow(($lon-$row['lon']),2));
-            if($dis < $error - $row['error'])
+            $dis = rad2deg(acos(sin(deg2rad($lat)) * sin(deg2rad($row['lat'])) +  cos(deg2rad($lat)) * cos(deg2rad($row['lat'])) * cos(deg2rad($lon - $row['lon'])))) * 69090 * 1.609344;
+            if($dis <= $error + $row['error'])
                 array_push($same, $row['id_alert']);
         }
         return $same;
-        // LAT: 110.95km -> 0.000135
-        // LON: 77.610km -> 0.000193
     }
 
     // GET A SPECIFIC ALERT CATEGORY
