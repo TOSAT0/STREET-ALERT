@@ -24,6 +24,9 @@
       function showPosition(position) {
         let lat = position.coords.latitude
         let lon = position.coords.longitude
+        let error = position.coords.accuracy
+        let id_user = 0
+        let id_type = 0
         let res
 
         xhttp.onreadystatechange = function() {
@@ -34,20 +37,28 @@
             n = document.getElementById("ask")
 
             if(res.status == "ok"){
-              n.innerHTML = "<h>Elemento aggiunto al database</h1>"
+              n.innerHTML = "<h>Database aggiornato</h1>"
             }if(res.status == "not_ok"){
-              
+              let alerts = "<p>La tua segnalazione potrebbe essere una tra le seguenti</p>" 
+              res.same.forEach(function(element) {
+                if(error < element['error'])
+                  alerts += "<p>"+element['lat']+" - "+element['lon']+"<button onclick='alert("+lat+", "+lon+", "+error+", \"\", \"\", "+element['id_alert']+", \"exist\")'>SI</button></p>"
+                else
+                  alerts += "<p>"+element['lat']+" - "+element['lon']+"<button onclick='alert("+element['lat']+", "+element['lon']+", "+element['error']+", \"\", \"\", "+element['id_alert']+", \"exist\")'>SI</button></p>"
+              })
+              alerts += "<p><button onclick='alert("+lat+", "+lon+", "+error+", "+id_user+", "+id_type+", \"\", \"not_exist\")'>NO</button></p>"
+              n.innerHTML = alerts;
             }
           }
         }
 
-        xhttp.open("GET", "server.php?lat=" + lat + "&lon=" + lon + "&status=report", true)
+        xhttp.open("GET", "server.php?lat=" + lat + "&lon=" + lon + "&error=" + error + "&id_user=" + id_user + "&id_type=" + id_type + "&status=report", true)
         xhttp.setRequestHeader("Cache-Control", "no-cache")
         xhttp.send()
       }
 
-      function alert(lat, lon, status){
-        xhttp.open("GET", "server.php?lat=" + lat + "&lon=" + lon + "&status="+status, true)
+      function alert(lat, lon, error, id_user, id_type, id_alert, status){
+        xhttp.open("GET", "server.php?lat=" + lat + "&lon=" + lon + "&error=" + error + "&id_user=" + id_user + "&id_type=" + id_type +"&id_alert=" + id_alert + "&status=" + status, true)
         xhttp.setRequestHeader("Cache-Control", "no-cache")
         xhttp.send()
       }

@@ -5,7 +5,7 @@
         try{
             return new mysqli("localhost", "root", "", "my_streetalert");
         }catch(Exception $e){
-            die("ops");
+            die("connect");
         }
     }
 
@@ -26,7 +26,7 @@
             try{
                 $conn->query("INSERT INTO VALUES(NULL, '$user','$psw')");
             }catch(Exception $e){
-                die("ops");
+                die("sing_up");
             }
         }
     }
@@ -38,7 +38,7 @@
         try{
             $ris = $conn->query("SELECT * FROM users WHERE user='$user'");
         }catch(Exception $e){
-            die("ops");
+            die("user_exist");
         }
         if(mysqli_num_rows($ris) > 0)
             return true;
@@ -52,18 +52,18 @@
         try{
             $conn->query("INSERT INTO alerts VALUES(NULL, '$photo', NOW(), $lat, $lon, $error, '$description', 'NEW', DEFAULT, $id_user, $id_type)");
         }catch(Exception $e){
-            die("ops");
+            die("report");
         }
     }
 
     // INCREASE THE NUMBER OF REPORT
-    function modify($id_alert, $lat, $lon){
+    function modify($id_alert, $lat, $lon, $error){
         $conn = connect();
         
         try{
-            $conn->query("UPDATE alerts SET lat = $lat, lon = $lon, times = times+1 WHERE id_alert = $id_alert");
+            $conn->query("UPDATE alerts SET lat = $lat, lon = $lon, error = $error, times = times+1 WHERE id_alert = $id_alert");
         } catch(Exception $e){
-            die("ops");
+            die("modify");
         }
     }
 
@@ -88,7 +88,7 @@
         try {    
             return $conn->query("SELECT * FROM alerts WHERE state IN ('$stateList')");
         } catch (Exception $e) {
-            die("ops");
+            die("get_alerts");
         }
     }
 
