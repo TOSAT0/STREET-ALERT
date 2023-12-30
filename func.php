@@ -52,7 +52,7 @@
         try{
             $conn->query("INSERT INTO alerts VALUES(NULL, '$photo', NOW(), $lat, $lon, $error, '$description', 'NEW', DEFAULT, $id_user, $id_type)");
         }catch(Exception $e){
-            die("1ops");
+            die("ops");
         }
     }
 
@@ -73,7 +73,7 @@
         $same = array();
         $alerts = get_alerts(array("NEW","SEEN","SOLVED"));
         foreach($alerts as $row){
-            $dis = rad2deg(acos(sin(deg2rad($lat)) * sin(deg2rad($row['lat'])) +  cos(deg2rad($lat)) * cos(deg2rad($row['lat'])) * cos(deg2rad($lon - $row['lon'])))) * 69090 * 1.609344;
+            $dis = rad2deg(acos(sin(deg2rad($lat)) * sin(deg2rad($row['lat'])) + cos(deg2rad($lat)) * cos(deg2rad($row['lat'])) * cos(deg2rad($lon - $row['lon'])))) * 69090 * 1.609344;
             if($dis <= $error + $row['error'])
                 array_push($same, $row['id_alert']);
         }
