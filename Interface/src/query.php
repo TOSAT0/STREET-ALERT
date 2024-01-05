@@ -5,7 +5,7 @@ function alerts(){
     $host = "127.0.0.1";
     $user = "root";
     $pw = "";
-    $db = "streetalert";
+    $db = "my_streetalert";
 
     $conn = new mysqli($host, $user, $pw, $db);
 

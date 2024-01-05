@@ -48,9 +48,9 @@ function onLocationFound() {
 
         // lo stato della segnalazione serve per impostare 
         // i diversi marker all'interno della mappa
-        if(state == 'Nuovo')
+        if(state == 'NEW')
             marker = L.marker([lat, lng], {icon: redIcon}).addTo(map)
-        else if(state == 'Visto')
+        else if(state == 'SEEN')
             marker = L.marker([lat, lng], {icon: blueIcon}).addTo(map)
         else
             marker = L.marker([lat, lng], {icon: greenIcon}).addTo(map)
