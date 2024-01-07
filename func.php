@@ -112,4 +112,38 @@
         echo "</table>";
     }
 
+    function goto_municipality($name){
+        $conn = connect();
+
+        try{
+            return $conn->query("SELECT lat, lon FROM municipalities WHERE name='$name'");
+        } catch(Exception $e){
+            die("goto_municipality");
+        }
+    }
+
+    function goto_province($province){
+        $conn = connect();
+
+        try{
+            $res = $conn->query("SELECT lat, lon FROM municipalities WHERE province='$province'");
+        } catch(Exception $e){
+            die("goto_province");
+        }
+
+        foreach($res as $v){
+            if($v['lat'] > $lat_max) $lat_max = $v['lat'];
+            if($v['lat'] < $lat_min) $lat_max = $v['lat'];
+            if($v['lon'] > $lon_max) $lon_max = $v['lon'];
+            if($v['lon'] < $lon_min) $lon_min = $v['lon'];
+        }
+
+        return array("lat" => ($lat_max + $lat_min)/2, "lon" => ($lon_max + $lon_min)/2);
+    }
+
+    function goto_region($name){
+
+    }
+
+
 ?>
