@@ -1,4 +1,4 @@
-import {redIcon, greenIcon, blueIcon} from './markers.js';
+import {redIcon, greenIcon, blueIcon, yellowIcon} from './markers.js';
 // import {layerControl} from './layers.js';
 
 var map = L.map('map').fitWorld()
@@ -50,9 +50,9 @@ function onLocationFound() {
         // i diversi marker all'interno della mappa
         if(state == 'NEW')
             marker = L.marker([lat, lng], {icon: redIcon}).addTo(map)
-        else if(state == 'SEEN')
-            marker = L.marker([lat, lng], {icon: blueIcon}).addTo(map)
-        else
+        if(state == 'SEEN')
+            marker = L.marker([lat, lng], {icon: yellowIcon}).addTo(map)
+        if(state == 'SOLVED')
             marker = L.marker([lat, lng], {icon: greenIcon}).addTo(map)
         
         index++;

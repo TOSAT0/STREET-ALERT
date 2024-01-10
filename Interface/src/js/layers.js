@@ -1,4 +1,4 @@
-import {redIcon, greenIcon, blueIcon} from './markers.js';
+import {redIcon, greenIcon, blueIcon, yellowIcon} from './markers.js';
 
 var city1 = L.marker([45.666182812368675, 12.245502938686116], {icon: redIcon}).bindPopup('This is Piazza dei Signori, TV.'),
     city2    = L.marker([45.663183646553364, 12.2423701184216], {icon: redIcon}).bindPopup('This is Poste Italiane, TV.'),
