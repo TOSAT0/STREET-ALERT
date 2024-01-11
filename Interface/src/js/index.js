@@ -19,7 +19,8 @@ map.locate({setView: true, maxZoom: 16})
 
 let xhttp = new XMLHttpRequest();
 
-xhttp.onreadystatechange = function() {
+xhttp.onreadystatechange = function()
+{
     // se la richiesta è andata a buon fine scarico i dati ricevuti
     // nel formato JSON in una variabile jsData, chiamando la funzione setData()
     if (this.readyState == 4 && this.status == 200) {
@@ -28,19 +29,47 @@ xhttp.onreadystatechange = function() {
     }
 }
 
-xhttp.open("POST", "server.php", true)
+xhttp.open("GET", "server.php?send=getCoords", true)
 xhttp.send()
 
 let jsData;
 
-function setData(a){
+function setData(a)
+{
     jsData = a
 }
 
-function onLocationFound() {
+//---------------------------- RICERCA COMUNI ----------------------------
+document.getElementById("form").addEventListener("submit", cercaComune)
+function cercaComune(e)
+{
+    e.preventDefault()
+    let comune = document.getElementById("comune").value
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+    if (this.readyState == 4 && this.status == 200)
+    {
+        if(JSON.parse(this.response).lat && JSON.parse(this.response).lon)
+        {
+            let coords = JSON.parse(this.response)
+            map.setView([coords.lat, coords.lon], 13)
+        }
+    }
+}
+
+xhttp.open("GET", "server.php?send=cercaComune&comune=" + comune, true)
+xhttp.send()
+}
+//---------------------------- RICERCA COMUNI ----------------------------
+
+function onLocationFound()
+{
     let marker, index = 0, lat, lng, state
 
-    while(index < jsData.length){
+    while(index < jsData.length)
+    {
 
         lat = jsData[index].lat,
         lng = jsData[index].lon,
@@ -60,7 +89,8 @@ function onLocationFound() {
     }
 }
 
-function onLocationError(e) {
+function onLocationError(e)
+{
     alert(e.message);
 }
 

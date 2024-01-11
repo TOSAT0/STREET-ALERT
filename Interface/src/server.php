@@ -1,9 +1,44 @@
 <?php
 
 require('query.php');
-getCoords();
 
-function getCoords(){
+if(($_GET['send']) == "cercaComune")
+{
+    $comune = $_GET['comune'];
+
+    if($comune == "")
+    {
+        echo json_encode("Compila il campo...");
+    }else
+    {
+        getComune($comune);
+    }
+}
+
+if(($_GET['send']) == "getCoords")
+{
+    getCoords();
+}
+
+function getComune($comune)
+{
+    $ris = cercaComune($comune);
+
+    if($ris->num_rows > 0)
+    {
+        foreach($ris as $v)    
+        $coords = array('lat' => $v['lat'], 'lon' => $v['lon']);
+
+        $json = json_encode($coords);
+        echo $json;
+    }else
+    {
+        echo json_encode("Nessun comune trovato...");
+    }
+}
+
+function getCoords()
+{
     $lat; $lon; $state;
     $data = array();
 
@@ -11,7 +46,8 @@ function getCoords(){
     // alerts() che va ad effettuare la query 
     $getCoords = alerts();
 
-    foreach($getCoords as $alert){
+    foreach($getCoords as $alert)
+    {
         $lat = $alert['lat'];
         $lon = $alert['lon'];
         $state = $alert['state'];
