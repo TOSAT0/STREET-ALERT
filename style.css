@@ -16,3 +16,6 @@ tr{
 .SOLVED{
     background-color: #639754;
 }
+.NEW_SELECT, .SEEN_SELECT, .SOLVED_SELECT{
+    background-color: #579BE9;
+}
