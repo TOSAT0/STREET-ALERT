@@ -1,0 +1,21 @@
+table{
+    width: 100%;
+}
+tr{
+    border: 1px solid black;
+    height: 50px;
+    text-align: center;
+}
+
+.NEW{
+    background-color: #E03C32;
+}
+.SEEN{
+    background-color: #FFD301;
+}
+.SOLVED{
+    background-color: #639754;
+}
+.NEW_SELECT, .SEEN_SELECT, .SOLVED_SELECT{
+    background-color: #579BE9;
+}

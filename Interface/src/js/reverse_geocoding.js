@@ -13,7 +13,8 @@ export function onMapClick(e)
         .then(response => response.json())
         .then(data => {
         if (data.address) {
-            var formattedAddress = `${data.address.road}, ${data.address.city}, ${data.address.country}, ${data.address.postcode}`;
+            console.log(data)
+            var formattedAddress = `${data.display_name}`
             L.popup()
                 .setLatLng(e.latlng)
                 .setContent(formattedAddress)

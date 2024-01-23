@@ -39,7 +39,7 @@ function getComune($comune)
 
 function getCoords()
 {
-    $lat; $lon; $state;
+    $lat; $lon; $state; $id_alert;
     $data = array();
 
     // prendo i dati dal database attraverso la funzione 
@@ -51,8 +51,9 @@ function getCoords()
         $lat = $alert['lat'];
         $lon = $alert['lon'];
         $state = $alert['state'];
+        $id_alert = $alert['id_alert'];
 
-        $data[] = array('lat' => $lat, 'lon' => $lon, 'state' => $state);
+        $data[] = array('lat' => $lat, 'lon' => $lon, 'state' => $state, 'id_alert' => $id_alert);
     }
 
     // trasformo l'array associativo in formato JSON 

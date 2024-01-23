@@ -31,23 +31,41 @@ function setData(a)
 
 export function onLocationFound()
 {
-    let marker, index = 0, lat, lng, state
+    let marker, index = 0, lat, lng, state, id_alert
+
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+
+    if(!urlParams.get('id_alert'))
+    {
+        map.setMinZoom(7);
+        map.locate({setView: true, maxZoom: 16})
+    }
 
     while(index < jsData.length)
     {
 
         lat = jsData[index].lat,
         lng = jsData[index].lon,
-        state = jsData[index].state
+        state = jsData[index].state,
+        id_alert = jsData[index].id_alert
 
         // lo stato della segnalazione serve per impostare 
         // i diversi marker all'interno della mappa
-        if(state == 'NEW')
+        if(id_alert == urlParams.get('id_alert'))
+        {
+            marker = L.marker([lat, lng], {icon: blueIcon}).addTo(map)
+            map.setView([lat, lng], 15);
+            map.setMinZoom(7);
+        }else
+        {
+            if(state == 'NEW')
             marker = L.marker([lat, lng], {icon: redIcon}).addTo(map)
-        if(state == 'SEEN')
-            marker = L.marker([lat, lng], {icon: yellowIcon}).addTo(map)
-        if(state == 'SOLVED')
-            marker = L.marker([lat, lng], {icon: greenIcon}).addTo(map)
+            if(state == 'SEEN')
+                marker = L.marker([lat, lng], {icon: yellowIcon}).addTo(map)
+            if(state == 'SOLVED')
+                marker = L.marker([lat, lng], {icon: greenIcon}).addTo(map)
+        }
         
         index++;
         
