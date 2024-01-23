@@ -5,10 +5,12 @@ maxZoom: 19,
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map)
 
+const key = 'gjvlgfcX14HAxeJhV36m'
+
+L.control.maptilerGeocoding({ apiKey: key }).addTo(map);
+
 // metodo per geolocalizzare il dispositivo
 // e settare la visuale della mappa
-map.setMinZoom(6);
-map.locate({setView: true, maxZoom: 16})
 map.on('locationerror', onLocationError)
 
 //---------------------------- STAMPA SEGNALAZIONI DAL DATABASE ----------------------------
@@ -17,7 +19,7 @@ onLocationFound
 onLocationError
 //---------------------------- STAMPA SEGNALAZIONI DAL DATABASE ----------------------------
 
-//---------------------------- RICERCA COMUNI ----------------------------
-import { cercaComune } from './cerca_comune.js'
-cercaComune
-//---------------------------- RICERCA COMUNI ----------------------------
+//---------------------------- REVERSE GEOCODING ----------------------------
+import { onMapClick } from './reverse_geocoding.js';
+map.on('click', onMapClick);
+//---------------------------- REVERSE GEOCODING ----------------------------
