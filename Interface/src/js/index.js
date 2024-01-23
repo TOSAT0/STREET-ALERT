@@ -1,9 +1,7 @@
 export var map = L.map('map').fitWorld()
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-maxZoom: 19,
-attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map)
+
+
 
 const key = 'gjvlgfcX14HAxeJhV36m'
 
@@ -23,3 +21,7 @@ onLocationError
 import { onMapClick } from './reverse_geocoding.js';
 map.on('click', onMapClick);
 //---------------------------- REVERSE GEOCODING ----------------------------
+
+export const mtLayer = L.maptilerLayer({apiKey: key}).addTo(map);
+import { onButtonClick } from './maplayer.js';
+document.getElementById('buttons').addEventListener('click',onButtonClick);

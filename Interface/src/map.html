@@ -17,40 +17,25 @@
 
     <script src="https://cdn.maptiler.com/maptiler-geocoding-control/v1.2.0/leaflet.umd.js"></script>
     <link href="https://cdn.maptiler.com/maptiler-geocoding-control/v1.2.0/style.css" rel="stylesheet">
+
+    <script src="https://cdn.maptiler.com/maptiler-sdk-js/v1.2.0/maptiler-sdk.umd.js"></script>
+    <link href="https://cdn.maptiler.com/maptiler-sdk-js/v1.2.0/maptiler-sdk.css" rel="stylesheet" />
+    <script src="https://cdn.maptiler.com/leaflet-maptilersdk/v2.0.0/leaflet-maptilersdk.js"></script>
+
 </head>
+
 <body>
 
     <div class="col-12">
         <div id="map"></div>
     </div>
+    <ul id="buttons">
+        <li id="streets" class="button">Streets</li>
+        <li id="satellite" class="button">Satellite</li>
+        <li id="dark" class="button">Dark</li>
+        <li id="light" class="button">Light</li>
+      </ul>
     
-    <style>
-    
-        .btnTable
-        {
-            transition-duration: 0.4s;
-            border: 2px solid red;
-            border-radius: 4px;
-            color: white;
-            background-color: red;
-            padding: 1.25% 3.5%;
-            font-size: 100%;
-            margin: 2% 2%;
-        }
-
-        .btnTable:hover
-        {
-            border: 2px solid red;
-            background-color: white;
-            color: black;
-        }
-
-        .table
-        {
-            text-align: center;
-        }
-    
-    </style>
     
     <div class="col-12 table">
         <a href="table.html">
