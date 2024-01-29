@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>HTML Geolocation</h1>
+    <p>Click the button to get your coordinates.</p>
+
+    <button onclick="getLocation()">QUESTA E' UNA MAPPA</button>
+
+    <p id="demo"></p>
+    <div id="ask"></div>
+
+    <script>
+      const x = document.getElementById("demo")
+      const n = document.getElementById("ask")
+      let xhttp = new XMLHttpRequest()
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition)
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser."
+        }
+      }
+
+      function showPosition(position) {
+        let lat = position.coords.latitude
+        let lon = position.coords.longitude
+        let error = (position.coords.accuracy > 999.9) ? 999.9 : position.coords.accuracy
+        let id_user = 0
+        let id_type = 0
+        
+        x.innerHTML = "lat: " + lat + "<br>lon: " + lon + "<br>error: " + error + "<br>"
+        n.innerHTML = "Caricamento..."
+
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            console.log(this.response)
+
+            res = JSON.parse(this.response)
+
+            if(res.status == "ok"){
+              n.innerHTML = "<h>Database aggiornato</h1>"
+            }if(res.status == "not_ok"){
+              let alerts = "<p>La tua segnalazione potrebbe essere una tra le seguenti</p>" 
+              res.same.forEach(function(element) {
+              	let id_alert = parseInt(element['id_alert'],10)
+                if(error < element['error'])
+                  alerts += "<p>"+id_alert+" - "+element['lat']+" - "+element['lon']+"<button onclick='alert("+lat+", "+lon+", "+error+", \"\", \"\", "+id_alert+", \"exist\")'>SI</button></p>"
+                else
+                  alerts += "<p>"+id_alert+" - "+element['lat']+" - "+element['lon']+"<button onclick='alert("+element['lat']+", "+element['lon']+", "+element['error']+", \"\", \"\", "+id_alert+", \"exist\")'>SI</button></p>"
+              })
+              alerts += "<p><button onclick='alert("+lat+", "+lon+", "+error+", "+id_user+", "+id_type+", \"\", \"not_exist\")'>NO</button></p>"
+              n.innerHTML = alerts;
+            }
+          }
+        }
+
+        xhttp.open("GET", "server.php?lat=" + lat + "&lon=" + lon + "&error=" + error + "&id_user=" + id_user + "&id_type=" + id_type + "&status=report", true)
+        xhttp.setRequestHeader("Cache-Control", "no-cache")
+        xhttp.send()
+      }
+
+      function alert(lat, lon, error, id_user, id_type, id_alert, status){
+      	n.innerHTML = "Caricamento..."
+        xhttp.open("GET", "server.php?lat=" + lat + "&lon=" + lon + "&error=" + error + "&id_user=" + id_user + "&id_type=" + id_type +"&id_alert=" + id_alert + "&status=" + status, true)
+        xhttp.setRequestHeader("Cache-Control", "no-cache")
+        xhttp.send()
+      }
+
+    </script>
+
+  </body>
+</html>
