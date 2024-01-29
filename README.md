@@ -22,9 +22,7 @@ L'app per una segnalazione intuitiva di disagi stradali nei comuni aderenti all'
 
 ## 🧐 Introduzione
 
-<video height=384 width=384 autoplay loop muted>
-  <source src="assets/intro.mp4" type="video/mp4">
-</video>
+<img height=384 src="assets/intro.gif">
 
 > **StreetAlert** è l'app che ti permette di segnalare in modo semplice e veloce eventuali disagi stradali.
 >
