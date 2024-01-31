@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>HTML Geolocation</h1>
+
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+      <label for="imageFile">SCATTA UNA FOTO DELA TUA SEGNALAZIONE:</label>
+      <input type="file" id="imageFile" name="image" capture="environment" accept="image/*" />
+      <br>
+      <label for="imageFile">Invia foto segnalazione</label>
+      <input type="submit" value="Upload">
+    </form><br>
+
+    <button onclick="getLocation()">invia le coordinate</button>
+
+    <p id="demo"></p>
+
+    <script>
+      const x = document.getElementById("demo");
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else { 
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      function showPosition(position) {
+        let lat = position.coords.latitude
+        let lon = position.coords.longitude
+        let coords
+
+        let xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          coords = JSON.parse(this.response);
+
+          x.innerHTML = "Latitude: " + coords.lat +
+          "<br>Longitude: " + coords.lon
+
+          }
+        }
+
+        xhttp.open("GET", "server.php?lat=" + lat + "&lon=" + lon, true)
+        xhttp.setRequestHeader("Cache-Control", "no-cache")
+        xhttp.send()
+
+      }
+
+    </script>
+
+  </body>
+</html>
