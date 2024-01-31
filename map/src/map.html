@@ -13,7 +13,7 @@
     
     <style>
     body { margin: 0; padding: 0; }
-    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    #map { position: absolute; top: 0; bottom: 0; width: 50%; height: 50%; margin-left: 25%;}
     .mapstyles-select { position: relative; top: 800px; left: 11px; z-index: 1000; }
     </style>
 </head>
@@ -26,6 +26,29 @@
         <option value="WINTER">WINTER</option>
         <option value="HYBRID">HYBRID</option>
     </select>
+
+    <div class="alerts-type-filter">
+        <form action="server.php">
+            Seleziona un filtro:
+            <select name="filter">
+                <option value="0">Visualizza tutti i tipi</option>
+                <option value="1">Buche nella strada</option>
+                <option value="2">Mancanza di segnaletica</option>
+                <option value="3">Segnaletica errata</option>
+                <option value="4">Segnaletica poco visibile</option>
+                <option value="5">Problemi con l'lluminazione stradale</option>
+                <option value="6">Marciapiedi danneggiati</option>
+                <option value="7">Attraversamenti danneggiati</option>
+                <option value="8">Veicoli abbandonati</option>
+                <option value="9">Inondazioni o allagamenti</option>
+                <option value="10">Strada in cattive condizioni</option>
+                <option value="11">Rifiuti in strada</option>
+                <option value="12">Altro</option>
+            </select>
+            <br/>
+            <input type="submit" name="alerts-type-filter" value="Applica filtri">
+        </form>
+    </div>
 
     <script type="module" src="js/index.js"></script>
 </body>

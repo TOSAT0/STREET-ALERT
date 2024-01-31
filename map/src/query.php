@@ -1,6 +1,6 @@
 <?php
 
-function alerts()
+function alerts($id)
 {
     $host = "127.0.0.1";
     $user = "root";
@@ -9,7 +9,12 @@ function alerts()
 
     $conn = new mysqli($host, $user, $pw, $db);
 
+    if($id == 0)
     $query = "SELECT * FROM alerts";
+    else
+    {
+        $query = "SELECT * FROM alerts WHERE id_type=" . $id;
+    }
 
     return $conn -> query($query);
 }

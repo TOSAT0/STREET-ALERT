@@ -10,10 +10,8 @@ export function createMap()
         center: [12.550343, 45.665957],
         zoom: 9,
         language: maptilersdk.Language.ITALIAN,
-        terrain: true,
+        terrain: false,
         terrainControl: true,
-        pitch: 0,
-        maxPitch: 85,
         maxZoom: 19
     })
 

@@ -1,63 +1,48 @@
 <?php
-
+session_start();
 require('query.php');
 
-if(($_GET['send']) == "cercaComune")
+if(isset($_GET['alerts-type-filter']))
 {
-    $comune = $_GET['comune'];
+    $_SESSION['filter'] = $_GET['filter'];
+    header('Location:map.html');
+}
 
-    if($comune == "")
+if(isset($_GET['send']))
+{
+    if(($_GET['send']) == "getAlerts")
     {
-        echo json_encode("Compila il campo...");
-    }else
-    {
-        getComune($comune);
+        getAlerts();
     }
 }
 
-if(($_GET['send']) == "getCoords")
+function getAlerts()
 {
-    getCoords();
-}
-
-function getComune($comune)
-{
-    $ris = cercaComune($comune);
-
-    if($ris->num_rows > 0)
-    {
-        foreach($ris as $v)    
-        $coords = array('lat' => $v['lat'], 'lon' => $v['lon']);
-
-        $json = json_encode($coords);
-        echo $json;
-    }else
-    {
-        echo json_encode("Nessun comune trovato...");
-    }
-}
-
-function getCoords()
-{
-    $lat; $lon; $state;
+    $lat; $lon; $state; $id_alert; $description;
     $data = array();
 
     // prendo i dati dal database attraverso la funzione 
-    // alerts() che va ad effettuare la query 
-    $getCoords = alerts();
+    // alerts() che va ad effettuare la query
+    if(isset($_SESSION['filter']))
+    {
+        $getAlerts = alerts($_SESSION['filter']);
+    }
+    else
+        $getAlerts = alerts(0);
 
-    foreach($getCoords as $alert)
+    foreach($getAlerts as $alert)
     {
         $lat = $alert['lat'];
         $lon = $alert['lon'];
         $state = $alert['state'];
+        $id_alert = $alert['id_alert'];
+        $description = $alert['description'];
 
-        $data[] = array('lat' => $lat, 'lon' => $lon, 'state' => $state);
+        $data[] = array('lat' => $lat, 'lon' => $lon, 'state' => $state, 'id_alert' => $id_alert, 'description' => $description);
     }
 
     // trasformo l'array associativo in formato JSON 
-    $jsonCoords = json_encode($data);
-    echo $jsonCoords;
+    $jsonAlerts = json_encode($data);
+    echo $jsonAlerts;
 }
-
 ?>
